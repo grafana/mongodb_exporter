@@ -360,8 +360,8 @@ func (e *Exporter) Run() {
 		Addr:    e.webListenAddress,
 		Handler: mux,
 	}
-
-	if err := web.ListenAndServe(server, e.opts.TLSConfigPath, promlog.New(&promlog.Config{})); err != nil {
+	flags := &web.FlagConfig{WebConfigFile: &e.opts.TLSConfigPath}
+	if err := web.ListenAndServe(server, flags, promlog.New(&promlog.Config{})); err != nil {
 		e.logger.Errorf("error starting server: %v", err)
 		os.Exit(1)
 	}
